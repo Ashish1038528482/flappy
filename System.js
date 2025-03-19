@@ -1,112 +1,79 @@
-const bird = document.getElementById("bird");
-const gameContainer = document.querySelector(".game-container");
-const scoreElement = document.getElementById("score");
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #70c5ce;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
 
-let birdY = 250;
-let gravity = 0.6;
-let velocity = 0;
-let jumpStrength = -10;
-let gameWidth = 400;
-let gameHeight = 600;
-let pipeGap = 150;
-let pipeWidth = 60;
-let pipeSpeed = 2;
-let pipes = [];
-let score = 0;
-let gameOver = false;
+.game-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    border: 2px solid #000;
+    overflow: hidden;
+    margin: 0 auto;
+}
 
-// Make the bird jump
-document.addEventListener("keydown", (e) => {
-  if (e.code === "Space" && !gameOver) {
-    velocity = jumpStrength;
-  }
-});
+#bird {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    left: 50px;
+    background-color: yellow;
+    border-radius: 50%;
+}
 
-// Game loop
-function gameLoop() {
-  if (gameOver) return;
+.pipe {
+    position: absolute;
+    width: 80px;
+    right: -80px; /* Start off-screen */
+}
 
-  // Apply gravity
-  velocity += gravity;
-  birdY += velocity;
-  bird.style.top = birdY + "px";
+.pipe-top {
+    top: 0;
+}
 
-  // Check for collisions with top and bottom
-  if (birdY <= 0 || birdY >= gameHeight - 40) {
-    endGame();
-  }
+.pipe-bottom {
+    bottom: 0;
+}
 
-  // Generate pipes
-  if (frames % 90 === 0) {
-    let pipeHeight = Math.random() * (gameHeight - pipeGap - 100) + 50;
-    pipes.push({
-      x: gameWidth,
-      height: pipeHeight,
-      passed: false,
-    });
-  }
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: white;
+    z-index: 10; /* Ensure score is on top */
+}
 
-  // Move pipes
-  pipes.forEach((pipe, index) => {
-    pipe.x -= pipeSpeed;
-    if (pipe.x + pipeWidth < 0) {
-      pipes.splice(index, 1);
-    }
+#play-button, #play-again-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10; /* Ensure buttons are on top */
+}
 
-    // Check for collisions with pipes
-    if (
-      birdY < pipe.height ||
-      birdY + 40 > pipe.height + pipeGap
-    ) {
-      if (pipe.x < 70 && pipe.x + pipeWidth > 50) {
-        endGame();
+#game-over-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10; /* Ensure game over screen is on top */
+}
+
+.hidden {
+    display: none;
       }
-    }
-
-    // Increase score if bird passes a pipe
-    if (!pipe.passed && pipe.x + pipeWidth < 50) {
-      pipe.passed = true;
-      score++;
-      scoreElement.textContent = "Score: " + score;
-    }
-  });
-
-  // Render pipes
-  renderPipes();
-
-  requestAnimationFrame(gameLoop);
-}
-
-// Render pipes
-function renderPipes() {
-  // Clear existing pipes
-  document.querySelectorAll(".pipe").forEach((pipe) => pipe.remove());
-
-  pipes.forEach((pipe) => {
-    let topPipe = document.createElement("div");
-    topPipe.className = "pipe";
-    topPipe.style.left = pipe.x + "px";
-    topPipe.style.height = pipe.height + "px";
-    topPipe.style.top = "0";
-    gameContainer.appendChild(topPipe);
-
-    let bottomPipe = document.createElement("div");
-    bottomPipe.className = "pipe";
-    bottomPipe.style.left = pipe.x + "px";
-    bottomPipe.style.height = gameHeight - pipe.height - pipeGap + "px";
-    bottomPipe.style.bottom = "0";
-    gameContainer.appendChild(bottomPipe);
-  });
-}
-
-// End the game
-function endGame() {
-  gameOver = true;
-  alert("Game Over! Your score: " + score);
-  location.reload(); // Restart the game
-}
-
-// Start the game
-let frames = 0;
-setInterval(() => frames++, 1000 / 60);
-gameLoop();
+      
