@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flappy Bird</title>
-  <link rel="stylesheet" href="krump.css"> <!-- Linked to krump.css -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird Game</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="game-container">
-    <div id="bird"></div>
-    <div id="score">Score: 0</div>
-  </div>
-  <script src="System.js"></script> <!-- Linked to System.js -->
+    <div class="game-container">
+        <!-- Play Button -->
+        <button id="play-button">Play</button>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="hidden">
+            <p>Game Over!</p>
+            <button id="play-again-button">Play Again</button>
+        </div>
+
+        <!-- Score Display -->
+        <div id="score">Score: 0</div>
+
+        <!-- Bird -->
+        <div id="bird"></div>
+
+        <!-- Pipes will be dynamically added here -->
+    </div>
+    <script src="js/script.js"></script>
 </body>
 </html>
