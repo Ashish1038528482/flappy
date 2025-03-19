@@ -9,9 +9,9 @@ const playButton = document.getElementById("play-button");
 const highestScoreElement = document.getElementById("highest-score");
 
 let birdY = 250;
-let gravity = 0.6;
+let gravity = 0.4; // Reduced gravity for slower fall
 let velocity = 0;
-let jumpStrength = -10;
+let jumpStrength = -8; // Reduced jump strength for smoother jumps
 let gameWidth = 400;
 let gameHeight = 600;
 let pipeGap = 150;
@@ -40,9 +40,16 @@ playAgainButton.addEventListener("click", () => {
   startGame();
 });
 
-// Make the bird jump
+// Make the bird jump on spacebar or screen tap
 document.addEventListener("keydown", (e) => {
   if (e.code === "Space" && !gameOver && gameStarted) {
+    velocity = jumpStrength;
+  }
+});
+
+// Add touch support for mobile devices
+document.addEventListener("touchstart", () => {
+  if (!gameOver && gameStarted) {
     velocity = jumpStrength;
   }
 });
