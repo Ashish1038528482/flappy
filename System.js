@@ -21,6 +21,7 @@ let pipes = [];
 let score = 0;
 let gameOver = false;
 let gameStarted = false;
+let animationFrameId;
 
 // Load highest score from localStorage
 let highestScore = localStorage.getItem("highestScore") || 0;
@@ -56,6 +57,8 @@ function startGame() {
   gameStarted = true;
   scoreElement.textContent = "Score: 0";
   gameOverScreen.style.display = "none";
+  bird.style.top = birdY + "px";
+  cancelAnimationFrame(animationFrameId); // Stop any existing game loop
   gameLoop();
 }
 
@@ -71,6 +74,7 @@ function gameLoop() {
   // Check for collisions with top and bottom
   if (birdY <= 0 || birdY >= gameHeight - 40) {
     endGame();
+    return;
   }
 
   // Generate pipes
@@ -97,6 +101,7 @@ function gameLoop() {
     ) {
       if (pipe.x < 70 && pipe.x + pipeWidth > 50) {
         endGame();
+        return;
       }
     }
 
@@ -111,7 +116,7 @@ function gameLoop() {
   // Render pipes
   renderPipes();
 
-  requestAnimationFrame(gameLoop);
+  animationFrameId = requestAnimationFrame(gameLoop);
 }
 
 // Render pipes
@@ -149,6 +154,8 @@ function endGame() {
     localStorage.setItem("highestScore", highestScore);
     highestScoreElement.textContent = `Highest Score: ${highestScore}`;
   }
+
+  cancelAnimationFrame(animationFrameId); // Stop the game loop
 }
 
 // Start the game loop
