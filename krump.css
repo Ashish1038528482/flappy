@@ -44,7 +44,8 @@ body {
   position: relative;
   width: 400px;
   height: 600px;
-  background-color: #70c5ce;
+  background-image: url("https://cdn.discordapp.com/attachments/1349135146456191051/1351759924857667584/download_6.jpg");
+  background-size: cover;
   border: 2px solid #000;
   overflow: hidden;
   display: none; /* Hide the game container initially */
@@ -56,7 +57,8 @@ body {
   left: 50px;
   width: 40px;
   height: 40px;
-  background-color: yellow;
+  background-image: url("https://cdn.discordapp.com/attachments/1349135146456191051/1351759825201270894/image0.png");
+  background-size: cover;
   border-radius: 50%;
 }
 
@@ -105,4 +107,4 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  }
+    }
