@@ -16,12 +16,13 @@ let gameWidth = 400;
 let gameHeight = 600;
 let pipeGap = 150; // Gap between top and bottom pipes
 let pipeWidth = 60;
-let pipeSpeed = 2;
+let pipeSpeed = 2; // Initial pipe speed
 let pipes = [];
 let score = 0;
 let gameOver = false;
 let gameStarted = false;
 let animationFrameId;
+let difficultyIntervalId;
 
 // Load highest score from localStorage
 let highestScore = localStorage.getItem("highestScore") || 0;
@@ -61,12 +62,15 @@ function startGame() {
   velocity = 0;
   pipes = [];
   score = 0;
+  pipeSpeed = 2; // Reset pipe speed
   gameOver = false;
   gameStarted = true;
   scoreElement.textContent = "Score: 0";
   gameOverScreen.style.display = "none";
   bird.style.top = birdY + "px";
   cancelAnimationFrame(animationFrameId); // Stop any existing game loop
+  clearInterval(difficultyIntervalId); // Stop any existing difficulty interval
+  difficultyIntervalId = setInterval(increaseDifficulty, 5000); // Increase difficulty every 5 seconds
   gameLoop();
 }
 
@@ -167,6 +171,15 @@ function endGame() {
   }
 
   cancelAnimationFrame(animationFrameId); // Stop the game loop
+  clearInterval(difficultyIntervalId); // Stop the difficulty interval
+}
+
+// Increase difficulty over time
+function increaseDifficulty() {
+  pipeSpeed += 0.5; // Increase pipe speed
+  if (pipeGap > 100) {
+    pipeGap -= 5; // Reduce pipe gap (make it harder)
+  }
 }
 
 // Start the game loop
