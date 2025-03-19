@@ -9,8 +9,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #70c5ce;
   font-family: Arial, sans-serif;
+  background-color: #70c5ce; /* Fallback background color */
 }
 
 .home-screen {
@@ -44,11 +44,22 @@ body {
   position: relative;
   width: 400px;
   height: 600px;
-  background-image: url("https://cdn.discordapp.com/attachments/1349135146456191051/1351759924857667584/download_6.jpg");
-  background-size: cover;
   border: 2px solid #000;
   overflow: hidden;
   display: none; /* Hide the game container initially */
+}
+
+/* Background image for the game container */
+.game-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://cdn.discordapp.com/attachments/1349135146456191051/1351759924857667584/download_6.jpg");
+  background-size: cover;
+  z-index: -1; /* Ensure the background is at the back */
 }
 
 #bird {
@@ -59,7 +70,7 @@ body {
   height: 40px;
   background-image: url("https://cdn.discordapp.com/attachments/1349135146456191051/1351759825201270894/image0.png");
   background-size: cover;
-  border-radius: 50%;
+  z-index: 10; /* Bring the bird to the front */
 }
 
 .pipe {
@@ -67,6 +78,7 @@ body {
   width: 60px;
   background-color: #90ee90; /* Light green color */
   border: 2px solid #000; /* Thin black border */
+  z-index: 5; /* Bring the pipes to the front */
 }
 
 #score {
@@ -75,7 +87,7 @@ body {
   right: 10px;
   font-size: 24px;
   color: white;
-  z-index: 10; /* Ensure score is above pipes */
+  z-index: 15; /* Ensure score is above everything */
 }
 
 #game-over {
@@ -85,7 +97,7 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   display: none; /* Hide initially */
-  z-index: 10; /* Ensure game-over screen is above pipes */
+  z-index: 20; /* Ensure game-over screen is above everything */
 }
 
 #game-over h2 {
@@ -107,4 +119,4 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-    }
+  }
