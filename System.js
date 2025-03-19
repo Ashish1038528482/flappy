@@ -91,11 +91,6 @@ function gameLoop() {
     let maxHeight = gameHeight - pipeGap - minHeight; // Maximum height for the top pipe
     let pipeHeight = Math.random() * (maxHeight - minHeight) + minHeight; // Random height within bounds
 
-    // Ensure the gap is always present
-    if (pipeHeight < minHeight || pipeHeight > maxHeight) {
-      pipeHeight = minHeight; // Fallback to minimum height if something goes wrong
-    }
-
     pipes.push({
       x: gameWidth,
       height: pipeHeight,
