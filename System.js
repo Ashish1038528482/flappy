@@ -48,8 +48,9 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Add touch support for mobile devices
-document.addEventListener("touchstart", () => {
+document.addEventListener("touchstart", (e) => {
   if (!gameOver && gameStarted) {
+    e.preventDefault(); // Prevent default touch behavior
     velocity = jumpStrength;
   }
 });
