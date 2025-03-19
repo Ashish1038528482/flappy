@@ -14,7 +14,7 @@ let velocity = 0;
 let jumpStrength = -8; // Reduced jump strength for smoother jumps
 let gameWidth = 400;
 let gameHeight = 600;
-let pipeGap = 150;
+let pipeGap = 150; // Gap between top and bottom pipes
 let pipeWidth = 60;
 let pipeSpeed = 2;
 let pipes = [];
@@ -87,7 +87,10 @@ function gameLoop() {
 
   // Generate pipes
   if (frames % 90 === 0) {
-    let pipeHeight = Math.random() * (gameHeight - pipeGap - 100) + 50;
+    let minHeight = 50; // Minimum height for the top pipe
+    let maxHeight = gameHeight - pipeGap - minHeight; // Maximum height for the top pipe
+    let pipeHeight = Math.random() * (maxHeight - minHeight) + minHeight; // Random height within bounds
+
     pipes.push({
       x: gameWidth,
       height: pipeHeight,
